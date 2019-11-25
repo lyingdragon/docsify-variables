@@ -68,7 +68,7 @@ function stringToObj(str, type){
         }
     }else if (type == "json"){
         variablesObj = JSON.parse(str);
-    }   
+    }
     return variablesObj;
 }
 
@@ -79,13 +79,13 @@ function install(hook,vm){
     if (!variablesFileType) variablesFileType = "xml";
     variablesFileType = variablesFileType.toLowerCase();
 
-    hook.afterEach(function(html, next) {
-        next(html.replace(/\${([^\}]*)}/g, function(a, b){return resolveVar(b)}))
+    hook.beforeEach( function(content) {
+        return content.replace(/\${([^\}]*)}/g, function(a, b){return resolveVar(b)})
     })
 }
 
 if (!window.$docsify) {
     window.$docsify = {}
   }
-  
+
 window.$docsify.plugins = (window.$docsify.plugins || []).concat(install)
